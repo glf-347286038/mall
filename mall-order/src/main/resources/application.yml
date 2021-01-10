@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: mall-order
+  datasource:
+    url: jdbc:mysql://localhost:3306/mall_common?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  port: 8082
+  servlet:
+    context-path: /mall-order/
+
+#logging:
+#  level: debug
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}:${spring.application.name}
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka/

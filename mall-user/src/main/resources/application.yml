@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: mall-order
+  datasource:
+    #连的使授权服务的数据库，其实真实环境，二者必然是分开的，注册、管理用户信息必定是oauth2那边做的
+    url: jdbc:mysql://localhost:3306/oauth2?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  port: 8083
+  servlet:
+    context-path: /mall-user/
+
+#logging:
+#  level: debug
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}:${spring.application.name}
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka/

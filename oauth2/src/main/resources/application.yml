@@ -1,0 +1,77 @@
+spring:
+  application:
+    name: oauth2
+  datasource:
+    url: jdbc:mysql://localhost:3306/oauth2?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      #最小空闲连接数量
+      minimum-idle: 20
+      #连接池最大连接数默认是10
+      aximum-pool-size: 200
+      #数据库连接超时时间
+      connection-timeout: 30000
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    mode: HTML5
+    prefix: classpath:/templates/
+    suffix: .html
+#    type: com.zaxxer.hikari.HikariDataSource
+
+
+server:
+  port: 8001
+
+eureka:
+  #实例是否在eureka服务器上注册自己的信息以供其他服务发现，默认为true
+  register-with-eureka: true
+  #是否从Eureka server获取注册的服务信息
+  fetch-registry: true
+  #在Eureka server的名称
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}:${spring.application.name}
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka/
+
+# 加载Mybatis映射文件,默认开启了下划线转驼峰设置
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.security.uaa.model.entity
+  # 配置slq打印日志
+logging:
+  level:
+    com:
+      security:
+        uaa:
+          mapper: debug
+
+
+#feign:
+#  hystrix:
+#    enabled: true
+#  compression:
+#    request:
+#      enabled: true
+#      mime-types[0]: text/xml
+#      mime-types[1]: application/xml
+#      mime-types[2]: application/json
+#      min-request-size: 2048
+#    response: true
+#client_id 客户端准入标识
+#client_secret  客户端密钥
+#grant_type  授权类型  填写authorization_code,表示授权码模式
+#code    授权码，就是刚刚获取的授权码，注意授权码使用一次就无效了，需要重新申请
+#redirect_uri   申请授权码时的跳转url，一定和申请授权码时用的redirect_uri一致
+# 获取授权码  localhost:8001/oauth/authorize?client_id=c1&response_type=code&scope=all&redirect_uri=http://www.baidu.com
+#http://localhost:8001/oauth/token  获得JWT post方式
+#client_id c1
+#client_secret secret
+#username 我习惯做唯一
+#password glf491550934
+#grant_type password
+

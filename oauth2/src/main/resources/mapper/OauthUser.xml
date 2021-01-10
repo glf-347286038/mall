@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.security.uaa.mapper.OauthUserMapper">
+    <select id="queryOauthUser" resultType="com.security.uaa.model.entity.OauthUser">
+        SELECT
+        USER_ID,
+        USER_NAME,
+        PASSWORD
+        FROM oauth_user
+        <where>
+            <if test="oauthUser.userName != null">
+                USER_NAME = #{oauthUser.userName}
+            </if>
+            <if test="oauthUser.userId != null">
+                USER_ID = #{oauthUser.userId}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryPermissionDetail" resultType="java.lang.String">
+        SELECT
+        OP.PERMISSION_LEVEL
+        FROM
+        oauth_permission_detail OPD
+        LEFT JOIN oauth_permission OP ON OP.PERMISSION_ID = OPD.PERMISSION_ID
+        LEFT JOIN oauth_user OU ON OU.USER_ID = OPD.USER_ID
+        <where>
+            <if test="userId != null">
+                OPD.USER_ID = #{userId}
+            </if>
+            <if test="userName != null">
+                AND OU.USER_NAME = #{userName}
+            </if>
+        </where>
+    </select>
+</mapper>

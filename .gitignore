@@ -1,0 +1,3 @@
+# Project exclude paths
+/mall-order/target/
+/oauth2/target/
