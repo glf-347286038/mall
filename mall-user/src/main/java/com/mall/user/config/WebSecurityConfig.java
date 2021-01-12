@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 /**
  * The bean 'metaDataSourceAdvisor' could not be registered. A bean with that name has already been defined and overriding is disabled.
+ * 因为在resourceServerConfig中已经配置了，所以会报错
  * @author gaolingfeng
  */
 //@Configuration

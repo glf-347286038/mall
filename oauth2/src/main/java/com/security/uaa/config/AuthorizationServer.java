@@ -100,6 +100,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
      */
     @Bean
     public AuthorizationServerTokenServices tokenService(){
+        //DefaultTokenServices 这个实例就是默认生成access_token的工具
         DefaultTokenServices service = new DefaultTokenServices();
         //客户端信息服务
         service.setClientDetailsService(clientDetailsService);

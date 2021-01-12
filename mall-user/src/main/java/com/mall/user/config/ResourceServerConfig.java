@@ -44,9 +44,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/**")
+                .antMatchers("/login/**").anonymous()
+                //除/login外都要鉴权通过
+                .anyRequest().authenticated()
                 //在oauth2中配置了范围，此范围若不存在oauth2的设置中，令牌就不管用
-                .access("#oauth2.hasScope('ROLE_USER')")
+                // 配置了antMatchers就不用配下面
+                // .access("#oauth2.hasScope('ROLE_USER')")
                 .and().csrf().disable()
                 .sessionManagement()
                 //基于token，session就不用再记录了

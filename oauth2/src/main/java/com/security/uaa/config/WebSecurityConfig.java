@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable()
                 .authorizeRequests()
                 //所有/r/**必须认证通过
-                .antMatchers("/r/**").authenticated()
+                .antMatchers("/p/**").authenticated()
                 .and()
                 //允许表单登录
                 .formLogin()
