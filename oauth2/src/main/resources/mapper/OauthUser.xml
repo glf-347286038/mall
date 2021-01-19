@@ -5,7 +5,11 @@
         SELECT
         USER_ID,
         USER_NAME,
-        PASSWORD
+        PASSWORD,
+        REAL_NAME,
+        PHONE,
+        SEX,
+        AGE
         FROM oauth_user
         <where>
             <if test="oauthUser.userName != null">

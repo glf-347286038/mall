@@ -49,8 +49,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.csrf().disable()
                 .authorizeRequests()
-                //所有/r/**必须认证通过
-                .antMatchers("/r/**").authenticated()
+                //所有/p/**必须认证通过
+                .antMatchers("/p/**").authenticated()
                 .and()
                 //允许表单登录
                 .formLogin()

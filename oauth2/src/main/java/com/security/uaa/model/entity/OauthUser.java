@@ -16,7 +16,10 @@ public class OauthUser extends AuditDomain {
     private Integer userId;
     private String userName;
     private String password;
-    private String permission;
+    private String realName;
+    private String phone;
+    private String sex;
+    private Integer age;
 
     public Integer getUserId() {
         return userId;
@@ -42,11 +45,35 @@ public class OauthUser extends AuditDomain {
         this.password = password;
     }
 
-    public String getPermission() {
-        return permission;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setPermission(String permission) {
-        this.permission = permission;
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }
