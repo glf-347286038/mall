@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -47,7 +46,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     private JwtAccessTokenConverter jwtAccessTokenConverter;
 
     /**
-     * 使用数据库方式存储客户端信息
+     * 使用数据库方式存储客户端信息,向数据库中查询信息
      * 自带的sql语句如下
      * SELECT client_id,client_secret,resource_ids,scope,authorized_grant_types,
      * 	web_server_redirect_uri,authorities,access_token_validity,refresh_token_validity,

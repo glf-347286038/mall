@@ -45,7 +45,12 @@ public class MyJwt {
      */
     @Data
     public static class AddInformation {
-        private String name;
+        /**
+         * 登录名
+         */
+        private String userName;
         private String age;
+        private String phone;
+        private String sex;
     }
 }

@@ -26,9 +26,9 @@ public interface OauthServiceClient {
      * @return jwt
      */
     @PostMapping("/oauth/token")
-    MyJwt getToken(@RequestParam("grant_type")String grant_type,
-                   @RequestParam("username")String username,
+    MyJwt getToken(@RequestParam("username")String username,
                    @RequestParam("password")String password,
+                   @RequestParam("grant_type")String grant_type,
                    @RequestParam("client_id")String client_id,
                    @RequestParam("client_secret")String client_secret);
 }
