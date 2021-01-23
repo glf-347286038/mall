@@ -1,5 +1,7 @@
 package com.mall.user.service;
 
+import com.mall.user.config.MyJwt;
+
 /**
  * description:
  * @author: gaolingfeng
@@ -14,5 +16,5 @@ public interface LoginService {
      * @param password
      * @return
      */
-    void getJwt(String userName, String password);
+    MyJwt getJwt(String userName, String password);
 }

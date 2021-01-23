@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date: 2020/12/26 18:01
  * @description:
  */
-@Api(value = "用户登录")
+@Api(tags = "login")
 @RestController
 @Slf4j
 public class LoginController {
@@ -31,9 +31,9 @@ public class LoginController {
     @GetMapping(value = "/login")
     public ResponseData Login(String userName,String password){
         log.info("LoginController login",userName,password);
-        ResponseData responseData = ResponseData.getInstance();
+        ResponseData responseData = new ResponseData();
         try{
-            loginService.getJwt(userName,password);
+            responseData.setData(loginService.getJwt(userName,password));
             responseData.setSuccess(true);
         }catch (Exception e){
             log.info("LoginController login",e.getMessage());
@@ -50,8 +50,9 @@ public class LoginController {
         return "nn";
     }
 
-    @GetMapping(value = "/p")
-//    标记拥有p1权限方可访问此url
+    @ApiOperation(value = "测试访问权限")
+    @GetMapping(value = "/p3")
+//    标记拥有p3权限方可访问此url
 //    @PreAuthorize("hasAnyAuthority()")
     @PreAuthorize("hasAuthority('P2')")
     public String r1(){
