@@ -34,7 +34,7 @@ public class MyJwt extends JwtAccessTokenConverter {
         Map<String, Object> additionalInformation = new HashMap<>(16);
         Map<String, Object> info = new HashMap<>(16);
         User user = (User) auth2Authentication.getPrincipal();
-        info.put("username",user.getUsername());
+        info.put("userName",user.getUsername());
         OauthUser oauthUser = oauthUserMapper.queryOauthUser(new OauthUser(){
             {
                 setUserName(user.getUsername());
@@ -43,6 +43,7 @@ public class MyJwt extends JwtAccessTokenConverter {
         info.put("userId",oauthUser.getUserId());
         info.put("phone",oauthUser.getPhone());
         info.put("age",oauthUser.getAge());
+        info.put("sex",oauthUser.getSex());
         additionalInformation.put("info" , info);
         ((DefaultOAuth2AccessToken) auth2AccessToken).setAdditionalInformation(additionalInformation);
         return super.enhance(auth2AccessToken,auth2Authentication);

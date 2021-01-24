@@ -48,6 +48,7 @@ public class MyJwt {
         /**
          * 登录名
          */
+        private Integer userId;
         private String userName;
         private String age;
         private String phone;

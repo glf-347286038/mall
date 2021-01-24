@@ -24,9 +24,6 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @Autowired
-    private OauthServiceClient oauthServiceClient;
-
     @ApiOperation(value = "登录检查")
     @GetMapping(value = "/login")
     public ResponseData Login(String userName,String password){
@@ -34,9 +31,9 @@ public class LoginController {
         ResponseData responseData = new ResponseData();
         try{
             responseData.setData(loginService.getJwt(userName,password));
-            responseData.setSuccess(true);
         }catch (Exception e){
             log.info("LoginController login",e.getMessage());
+            responseData.setMessage(e.getMessage());
             responseData.setSuccess(false);
         }
         return responseData;
@@ -44,9 +41,6 @@ public class LoginController {
 
     @GetMapping(value = "/test")
     public String test(){
-        MyJwt my = oauthServiceClient.getToken("password","我习惯做唯一","glf491550",
-                "c1","secret");
-        System.out.println(my);
         return "nn";
     }
 
