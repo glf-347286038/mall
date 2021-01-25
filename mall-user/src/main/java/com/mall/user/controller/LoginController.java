@@ -1,7 +1,5 @@
 package com.mall.user.controller;
 
-import com.mall.user.client.OauthServiceClient;
-import com.mall.user.config.MyJwt;
 import com.mall.user.service.LoginService;
 import com.mall.user.util.ResponseData;
 import io.swagger.annotations.Api;
@@ -17,41 +15,51 @@ import org.springframework.web.bind.annotation.RestController;
  * @date: 2020/12/26 18:01
  * @description:
  */
-@Api(value = "用户登录")
+@Api(tags = "login")
 @RestController
 @Slf4j
 public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @Autowired
-    private OauthServiceClient oauthServiceClient;
-
     @ApiOperation(value = "登录检查")
     @GetMapping(value = "/login")
     public ResponseData Login(String userName,String password){
         log.info("LoginController login",userName,password);
-        ResponseData responseData = ResponseData.getInstance();
-        try{
-            loginService.getJwt(userName,password);
-            responseData.setSuccess(true);
-        }catch (Exception e){
-            log.info("LoginController login",e.getMessage());
+        ResponseData responseData = new ResponseData();
+        try {
+            responseData.setData(loginService.getJwt(userName, password));
+        } catch (Exception e) {
+            log.info("LoginController login", e.getMessage());
+            responseData.setMessage(e.getMessage());
+            responseData.setSuccess(false);
+        }
+        return responseData;
+    }
+
+    @ApiOperation(value = "刷新token")
+    @GetMapping(value = "/refreshToken")
+    public ResponseData refreshToken(String refreshToken) {
+        log.info("LoginController refreshToken", refreshToken);
+        ResponseData responseData = new ResponseData();
+        try {
+            responseData.setData(loginService.refreshToken(refreshToken));
+        } catch (Exception e) {
+            log.info("LoginController refreshToken", e.getMessage());
+            responseData.setMessage(e.getMessage());
             responseData.setSuccess(false);
         }
         return responseData;
     }
 
     @GetMapping(value = "/test")
-    public String test(){
-        MyJwt my = oauthServiceClient.getToken("password","我习惯做唯一","glf491550",
-                "c1","secret");
-        System.out.println(my);
+    public String test() {
         return "nn";
     }
 
-    @GetMapping(value = "/p")
-//    标记拥有p1权限方可访问此url
+    @ApiOperation(value = "测试访问权限")
+    @GetMapping(value = "/p3")
+//    标记拥有p3权限方可访问此url
 //    @PreAuthorize("hasAnyAuthority()")
     @PreAuthorize("hasAuthority('P2')")
     public String r1(){

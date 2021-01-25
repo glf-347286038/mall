@@ -29,9 +29,16 @@ public class LoginServiceImpl implements LoginService {
 
     @Value("${oauth2.grant-type}")
     private String grantType;
+
     @Override
-    public void getJwt(String userName, String password) {
-        // 1.远程请求授权服务器获取token
-        MyJwt myJwt = oauthServiceClient.getToken(userName,password,grantType,clientId,clientSecret);
+    public MyJwt getJwt(String userName, String password) {
+        // 远程请求授权服务器获取token
+        return oauthServiceClient.getToken(userName, password, grantType, clientId, clientSecret);
+    }
+
+    @Override
+    public MyJwt refreshToken(String refreshToken) {
+        // 远程刷新token
+        return oauthServiceClient.refreshToken(refreshToken, grantType, clientId, clientSecret);
     }
 }

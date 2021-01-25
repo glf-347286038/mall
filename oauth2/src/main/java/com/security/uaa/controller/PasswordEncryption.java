@@ -18,12 +18,13 @@ public class PasswordEncryption {
 
     /**
      * 只有P4权限才有 输入密码获得加密后的密码
+     *
      * @param password
      * @return
      */
     @PreAuthorize("hasAuthority('P4')")
     @GetMapping(value = "getEncryptedPassword")
-    public String getEncryptedPassword(String password){
+    public String getEncryptedPassword(String password) {
         return password + ":" + passwordEncoder.encode(password);
     }
 }

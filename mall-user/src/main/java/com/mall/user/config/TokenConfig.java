@@ -33,9 +33,8 @@ public class TokenConfig {
     /**
      * 令牌存储策略,使用内存存储令牌
      * @return
-    @Bean
-    public TokenStore tokenStore(){
-        return new InMemoryTokenStore();
-    }
+     @Bean public TokenStore tokenStore(){
+     return new InMemoryTokenStore();
+     }
      */
 }
