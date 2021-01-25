@@ -1,7 +1,5 @@
 package com.mall.user.controller;
 
-import com.mall.user.client.OauthServiceClient;
-import com.mall.user.config.MyJwt;
 import com.mall.user.service.LoginService;
 import com.mall.user.util.ResponseData;
 import io.swagger.annotations.Api;
@@ -29,10 +27,25 @@ public class LoginController {
     public ResponseData Login(String userName,String password){
         log.info("LoginController login",userName,password);
         ResponseData responseData = new ResponseData();
-        try{
-            responseData.setData(loginService.getJwt(userName,password));
-        }catch (Exception e){
-            log.info("LoginController login",e.getMessage());
+        try {
+            responseData.setData(loginService.getJwt(userName, password));
+        } catch (Exception e) {
+            log.info("LoginController login", e.getMessage());
+            responseData.setMessage(e.getMessage());
+            responseData.setSuccess(false);
+        }
+        return responseData;
+    }
+
+    @ApiOperation(value = "刷新token")
+    @GetMapping(value = "/refreshToken")
+    public ResponseData refreshToken(String refreshToken) {
+        log.info("LoginController refreshToken", refreshToken);
+        ResponseData responseData = new ResponseData();
+        try {
+            responseData.setData(loginService.refreshToken(refreshToken));
+        } catch (Exception e) {
+            log.info("LoginController refreshToken", e.getMessage());
             responseData.setMessage(e.getMessage());
             responseData.setSuccess(false);
         }
@@ -40,7 +53,7 @@ public class LoginController {
     }
 
     @GetMapping(value = "/test")
-    public String test(){
+    public String test() {
         return "nn";
     }
 

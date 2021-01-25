@@ -25,23 +25,25 @@ public class SpringDataUserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private OauthUserMapper oauthUserMapper;
+
     /**
      * 根据账号查询用户信息
+     *
+     * @param userName
      * @author: gaolingfeng
      * @date: 2020/12/23 22:54
-     * @param userName
      */
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        System.out.println("secret:"+passwordEncoder.encode("secret"));
+        System.out.println("secret:" + passwordEncoder.encode("secret"));
         //去根据用户名去数据库中查找
-        List<OauthUser> oauthUserList = oauthUserMapper.queryOauthUser(new OauthUser(){
+        List<OauthUser> oauthUserList = oauthUserMapper.queryOauthUser(new OauthUser() {
             {
                 setUserName(userName);
             }
         });
 
-        if(CollectionUtils.isEmpty(oauthUserList)){
+        if (CollectionUtils.isEmpty(oauthUserList)) {
             //如果用户查不到 由provider来抛出异常
             return null;
         }

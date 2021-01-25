@@ -1,7 +1,5 @@
 package com.mall.user.config;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiKeyAuthDefinition;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +27,7 @@ import java.util.List;
 @EnableSwagger2
 public class Swagger2Config {
     @Bean
-    public Docket createRestApi(){
+    public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .pathMapping("/")
                 .apiInfo(apiInfo())
@@ -57,20 +55,22 @@ public class Swagger2Config {
 
     /**
      * 这种方式深没有bearer
+     *
      * @return
      */
     private List<ApiKey> security() {
         //Authorization
-        List<ApiKey> apiKeyList= new ArrayList<ApiKey>();
+        List<ApiKey> apiKeyList = new ArrayList<ApiKey>();
         apiKeyList.add(new ApiKey("Authorization", "Authorization", "header"));
         return apiKeyList;
     }
 
     /**
      * 采用jwt token类型为bearer方式 每次访问接口都要加token
+     *
      * @return 配置bearer token
      */
-    private List<Parameter> jwtToken(){
+    private List<Parameter> jwtToken() {
         String jwt = "Bearer {jwt}";
         ParameterBuilder tokenPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<>();
