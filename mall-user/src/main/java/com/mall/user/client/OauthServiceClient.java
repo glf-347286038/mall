@@ -39,6 +39,7 @@ public interface OauthServiceClient {
      * @param clientSecret 客户端密钥
      * @return jwt
      */
+    @PostMapping("/oauth/token")
     MyJwt refreshToken(@RequestParam("refresh_token")String refreshToken,
                        @RequestParam("grant_type")String grantType,
                        @RequestParam("client_id")String clientId,
