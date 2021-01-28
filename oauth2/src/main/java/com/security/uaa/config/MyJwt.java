@@ -9,8 +9,10 @@ import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.util.CollectionUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,31 +40,25 @@ public class MyJwt extends JwtAccessTokenConverter {
         Map<String, Object> additionalInformation = new HashMap<>(16);
         Map<String, Object> info = new HashMap<>(16);
 
-        String userName = null;
+        String grantType = auth2Authentication.getOAuth2Request().getGrantType();
+        System.out.println(grantType);
 
-        // 不为空则为刷新token,而不是请求token，这样判断是因为 下面获得userName时请求token是User，而刷新时是个String
-        if(StringUtils.isNotEmpty(auth2AccessToken.getRefreshToken().getValue())){
-            userName = auth2Authentication.getUserAuthentication().getPrincipal().toString();
-        }else {
+        // 为密码模式时加入下列信息，否则只返回默认的信息 为空时时refresh_token
+        if(StringUtils.isNotEmpty(grantType)){
             User user = (User) auth2Authentication.getUserAuthentication().getPrincipal();
-            userName = user.getUsername();
+            List<OauthUser> oauthUser = oauthUserMapper.queryOauthUser(new OauthUser() {
+                {
+                    setUserName(user.getUsername());
+                }
+            });
+            info.put("userName", user.getUsername());
+            info.put("userId", oauthUser.get(0).getUserId());
+            info.put("phone", oauthUser.get(0).getPhone());
+            info.put("age", oauthUser.get(0).getAge());
+            info.put("sex", oauthUser.get(0).getSex());
+            additionalInformation.put("info", info);
         }
 
-        System.out.println(auth2Authentication.getOAuth2Request().getGrantType());
-
-        // User user = (User) auth2Authentication.getUserAuthentication().getPrincipal();
-        info.put("userName", userName);
-        String finalUserName = userName;
-        OauthUser oauthUser = oauthUserMapper.queryOauthUser(new OauthUser() {
-            {
-                setUserName(finalUserName);
-            }
-        }).get(0);
-        info.put("userId", oauthUser.getUserId());
-        info.put("phone", oauthUser.getPhone());
-        info.put("age", oauthUser.getAge());
-        info.put("sex", oauthUser.getSex());
-        additionalInformation.put("info", info);
         ((DefaultOAuth2AccessToken) auth2AccessToken).setAdditionalInformation(additionalInformation);
         return super.enhance(auth2AccessToken, auth2Authentication);
     }
