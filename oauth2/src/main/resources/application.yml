@@ -37,6 +37,11 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8000/eureka/
+ribbon:
+  # 值的是建立连接所用的时间，使用与网络状态正常的情况，两端连接所用的时间
+  ReadTimeout: 5000
+  # 指的是建立连接后从服务器读取到可用资源所用的时间
+  ConnectionTimeout: 5000
 
 # 加载Mybatis映射文件,默认开启了下划线转驼峰设置
 mybatis-plus:

@@ -2,6 +2,7 @@ package com.security.uaa.config;
 
 import com.security.uaa.mapper.OauthUserMapper;
 import com.security.uaa.model.entity.OauthUser;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -36,11 +37,25 @@ public class MyJwt extends JwtAccessTokenConverter {
     public OAuth2AccessToken enhance(OAuth2AccessToken auth2AccessToken, OAuth2Authentication auth2Authentication) {
         Map<String, Object> additionalInformation = new HashMap<>(16);
         Map<String, Object> info = new HashMap<>(16);
-        User user = (User) auth2Authentication.getPrincipal();
-        info.put("userName", user.getUsername());
+
+        String userName = null;
+
+        // 不为空则为刷新token,而不是请求token，这样判断是因为 下面获得userName时请求token是User，而刷新时是个String
+        if(StringUtils.isNotEmpty(auth2AccessToken.getRefreshToken().getValue())){
+            userName = auth2Authentication.getUserAuthentication().getPrincipal().toString();
+        }else {
+            User user = (User) auth2Authentication.getUserAuthentication().getPrincipal();
+            userName = user.getUsername();
+        }
+
+        System.out.println(auth2Authentication.getOAuth2Request().getGrantType());
+
+        // User user = (User) auth2Authentication.getUserAuthentication().getPrincipal();
+        info.put("userName", userName);
+        String finalUserName = userName;
         OauthUser oauthUser = oauthUserMapper.queryOauthUser(new OauthUser() {
             {
-                setUserName(user.getUsername());
+                setUserName(finalUserName);
             }
         }).get(0);
         info.put("userId", oauthUser.getUserId());

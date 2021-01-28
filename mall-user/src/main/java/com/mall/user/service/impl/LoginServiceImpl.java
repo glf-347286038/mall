@@ -30,6 +30,8 @@ public class LoginServiceImpl implements LoginService {
     @Value("${oauth2.grant-type}")
     private String grantType;
 
+    public static final String GRANT_TYPE = "refresh_token";
+
     @Override
     public MyJwt getJwt(String userName, String password) {
         // 远程请求授权服务器获取token
@@ -39,6 +41,6 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public MyJwt refreshToken(String refreshToken) {
         // 远程刷新token
-        return oauthServiceClient.refreshToken(refreshToken, grantType, clientId, clientSecret);
+        return oauthServiceClient.refreshToken(refreshToken, GRANT_TYPE, clientId, clientSecret);
     }
 }
