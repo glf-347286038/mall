@@ -9,7 +9,6 @@ import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.util.CollectionUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +43,7 @@ public class MyJwt extends JwtAccessTokenConverter {
         System.out.println(grantType);
 
         // 为密码模式时加入下列信息，否则只返回默认的信息 为空时时refresh_token
-        if(StringUtils.isNotEmpty(grantType)){
+        if (StringUtils.isNotEmpty(grantType)) {
             User user = (User) auth2Authentication.getUserAuthentication().getPrincipal();
             List<OauthUser> oauthUser = oauthUserMapper.queryOauthUser(new OauthUser() {
                 {

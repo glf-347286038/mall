@@ -1,12 +1,9 @@
 package com.mall.user.util;
 
-import com.mall.user.config.MyJwt;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 返回消息统一格式
