@@ -1,6 +1,6 @@
 package com.mall.user.service;
 
-import com.mall.user.config.MyJwt;
+import com.mall.user.common.config.MyJwt;
 
 /**
  * description:

@@ -1,4 +1,4 @@
-package com.mall.user.config;
+package com.mall.user.common.config;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;

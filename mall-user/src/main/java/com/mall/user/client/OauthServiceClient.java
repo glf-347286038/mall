@@ -1,6 +1,6 @@
 package com.mall.user.client;
 
-import com.mall.user.config.MyJwt;
+import com.mall.user.common.config.MyJwt;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;

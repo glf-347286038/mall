@@ -1,4 +1,4 @@
-package com.mall.user.config;
+package com.mall.user.common.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

@@ -1,7 +1,7 @@
 package com.mall.user.service.impl;
 
 import com.mall.user.client.OauthServiceClient;
-import com.mall.user.config.MyJwt;
+import com.mall.user.common.config.MyJwt;
 import com.mall.user.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
