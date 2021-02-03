@@ -41,7 +41,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login/**").anonymous()
+                .antMatchers("/oauth/**").anonymous()
                 .antMatchers("/register/**").anonymous()
                 // 除/login和/register外都要鉴权通过
                 // 放行swagger
