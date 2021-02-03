@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @date: 2021/1/24 17:41
  * @description: 配置跨域访问
  */
-@Configuration
+//@Configuration 会与网关依赖冲突
 public class CrossOriginConfig implements WebMvcConfigurer {
     static final String[] ORIGINS = new String[]{"GET", "POST", "PUT", "DELETE"};
 

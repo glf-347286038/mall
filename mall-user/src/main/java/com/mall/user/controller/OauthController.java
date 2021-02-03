@@ -1,5 +1,6 @@
 package com.mall.user.controller;
 
+import com.mall.user.common.config.MyJwt;
 import com.mall.user.service.LoginService;
 import com.mall.user.util.ResponseData;
 import io.swagger.annotations.Api;
@@ -16,23 +17,29 @@ import org.springframework.web.bind.annotation.RestController;
  * @date: 2020/12/26 18:01
  * @description:
  */
-@Api(tags = "login")
+@Api(tags = "oauth")
 @RestController
-@RequestMapping(value = "login")
+@RequestMapping(value = "oauth")
 @Slf4j
-public class LoginController {
+public class OauthController {
     @Autowired
     private LoginService loginService;
 
+    @ApiOperation(value = "测试访问")
+    @GetMapping(value = "/test")
+    public String test() {
+        return "访问成功8083";
+    }
+
     @ApiOperation(value = "登录检查")
     @GetMapping(value = "/login")
-    public ResponseData Login(String userName,String password){
-        log.info("LoginController login",userName,password);
-        ResponseData responseData = new ResponseData();
+    public ResponseData<MyJwt> login(String userName, String password){
+        log.info("LoginController login{},{}",userName,password);
+        ResponseData<MyJwt> responseData = new ResponseData<>();
         try {
             responseData.setData(loginService.getJwt(userName, password));
         } catch (Exception e) {
-            log.info("LoginController login", e.getMessage());
+            log.info("LoginController login{}", e.getMessage(), e);
             responseData.setMessage(e.getMessage());
             responseData.setSuccess(false);
         }
@@ -41,23 +48,17 @@ public class LoginController {
 
     @ApiOperation(value = "刷新token")
     @GetMapping(value = "/refreshToken")
-    public ResponseData refreshToken(String refreshToken) {
-        log.info("LoginController refreshToken", refreshToken);
-        ResponseData responseData = new ResponseData();
+    public ResponseData<MyJwt> refreshToken(String refreshToken) {
+        log.info("LoginController refreshToken{}", refreshToken);
+        ResponseData<MyJwt> responseData = new ResponseData<>();
         try {
             responseData.setData(loginService.refreshToken(refreshToken));
         } catch (Exception e) {
-            log.info("LoginController refreshToken", e.getMessage());
+            log.info("LoginController refreshToken{}", e.getMessage(), e);
             responseData.setMessage(e.getMessage());
             responseData.setSuccess(false);
         }
         return responseData;
-    }
-
-    @ApiOperation(value = "测试访问权限")
-    @GetMapping(value = "/test")
-    public String test() {
-        return "nn";
     }
 
     @ApiOperation(value = "测试访问权限")
