@@ -20,6 +20,14 @@ public interface LoginService {
     MyJwt getJwt(String userName, String password);
 
     /**
+     * 验证token
+     *
+     * @param accessToken 用于验证的token
+     * @return boolean
+     */
+     boolean checkToken(String accessToken);
+
+    /**
      * 刷新token
      *
      * @param refreshToken 用于刷新的token的refreshToken

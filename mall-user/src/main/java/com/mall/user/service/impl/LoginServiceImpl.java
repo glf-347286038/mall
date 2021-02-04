@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 /**
  * @author: gaolingfeng
@@ -36,6 +37,14 @@ public class LoginServiceImpl implements LoginService {
     public MyJwt getJwt(String userName, String password) {
         // 远程请求授权服务器获取token
         return oauthServiceClient.getToken(userName, password, grantType, clientId, clientSecret);
+    }
+
+    @Override
+    public boolean checkToken(String accessToken) {
+        if(ObjectUtils.isEmpty(oauthServiceClient.checkAccessToken(accessToken))){
+            return false;
+        }
+        return true;
     }
 
     @Override

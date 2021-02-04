@@ -46,6 +46,22 @@ public class OauthController {
         return responseData;
     }
 
+    @ApiOperation(value = "验证token有效性")
+    @GetMapping(value = "/checkToken")
+    public ResponseData<Boolean> checkToken(String accessToken) {
+        log.info("LoginController checkToken{}", accessToken);
+        ResponseData<Boolean> responseData = new ResponseData<>();
+        try {
+            responseData.setData(loginService.checkToken(accessToken));
+        } catch (Exception e) {
+            log.info("LoginController checkToken{}", e.getMessage(), e);
+            responseData.setData(false);
+            responseData.setMessage(e.getMessage());
+            responseData.setSuccess(false);
+        }
+        return responseData;
+    }
+
     @ApiOperation(value = "刷新token")
     @GetMapping(value = "/refreshToken")
     public ResponseData<MyJwt> refreshToken(String refreshToken) {
