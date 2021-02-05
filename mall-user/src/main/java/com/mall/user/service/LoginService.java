@@ -22,10 +22,10 @@ public interface LoginService {
     /**
      * 验证token
      *
-     * @param accessToken 用于验证的token
+     * @param token 用于验证的token
      * @return boolean
      */
-     boolean checkToken(String accessToken);
+    void checkToken(String token);
 
     /**
      * 刷新token
@@ -34,4 +34,13 @@ public interface LoginService {
      * @return MyJwt
      */
     MyJwt refreshToken(String refreshToken);
+
+    /**
+     * 退出登录
+     *
+     * @return String
+     * @author: gaolingfeng
+     * @date: 2021/2/5 9:35
+     */
+    String logout();
 }

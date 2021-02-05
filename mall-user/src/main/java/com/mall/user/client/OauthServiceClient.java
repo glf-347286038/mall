@@ -35,11 +35,11 @@ public interface OauthServiceClient {
      * 验证token的有效性
      * @author: gaolingfeng
      * @date: 2021/2/4 1:13
-     * @param accessToken 认证token
+     * @param token 认证token
      * @return void 无返回值
      */
     @PostMapping("/oauth/check_token")
-    Object checkAccessToken(@RequestParam("token")String accessToken);
+    void checkAccessToken(@RequestParam("token")String token);
 
     /**
      * token失效 使用refresh_token重新请求token

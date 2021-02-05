@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 /**
  * @author: gaolingfeng
@@ -40,16 +39,18 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public boolean checkToken(String accessToken) {
-        if(ObjectUtils.isEmpty(oauthServiceClient.checkAccessToken(accessToken))){
-            return false;
-        }
-        return true;
+    public void checkToken(String token) {
+        oauthServiceClient.checkAccessToken(token);
     }
 
     @Override
     public MyJwt refreshToken(String refreshToken) {
         // 远程刷新token
         return oauthServiceClient.refreshToken(refreshToken, GRANT_TYPE, clientId, clientSecret);
+    }
+
+    @Override
+    public String logout() {
+        return "退出登录";
     }
 }

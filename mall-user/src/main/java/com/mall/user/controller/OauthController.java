@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -33,13 +34,14 @@ public class OauthController {
 
     @ApiOperation(value = "登录检查")
     @GetMapping(value = "/login")
-    public ResponseData<MyJwt> login(String userName, String password){
-        log.info("LoginController login{},{}",userName,password);
+    public ResponseData<MyJwt> login(@RequestParam("userName") String userName,
+                                     @RequestParam("password") String password){
+        log.info("<====LoginController login{},{}",userName,password);
         ResponseData<MyJwt> responseData = new ResponseData<>();
         try {
             responseData.setData(loginService.getJwt(userName, password));
         } catch (Exception e) {
-            log.info("LoginController login{}", e.getMessage(), e);
+            log.error("<====LoginController login{}", e.getMessage(), e);
             responseData.setMessage(e.getMessage());
             responseData.setSuccess(false);
         }
@@ -48,13 +50,13 @@ public class OauthController {
 
     @ApiOperation(value = "验证token有效性")
     @GetMapping(value = "/checkToken")
-    public ResponseData<Boolean> checkToken(String accessToken) {
-        log.info("LoginController checkToken{}", accessToken);
+    public ResponseData<Boolean> checkToken(@RequestParam("token") String token) {
+        log.info("<====LoginController checkToken{}", token);
         ResponseData<Boolean> responseData = new ResponseData<>();
         try {
-            responseData.setData(loginService.checkToken(accessToken));
+            loginService.checkToken(token);
         } catch (Exception e) {
-            log.info("LoginController checkToken{}", e.getMessage(), e);
+            log.error("<====LoginController checkToken{}", e.getMessage(), e);
             responseData.setData(false);
             responseData.setMessage(e.getMessage());
             responseData.setSuccess(false);
@@ -64,15 +66,27 @@ public class OauthController {
 
     @ApiOperation(value = "刷新token")
     @GetMapping(value = "/refreshToken")
-    public ResponseData<MyJwt> refreshToken(String refreshToken) {
-        log.info("LoginController refreshToken{}", refreshToken);
+    public ResponseData<MyJwt> refreshToken(@RequestParam("refreshToken") String refreshToken) {
+        log.info("<====LoginController refreshToken{}", refreshToken);
         ResponseData<MyJwt> responseData = new ResponseData<>();
         try {
             responseData.setData(loginService.refreshToken(refreshToken));
         } catch (Exception e) {
-            log.info("LoginController refreshToken{}", e.getMessage(), e);
+            log.error("<====LoginController refreshToken{}", e.getMessage(), e);
             responseData.setMessage(e.getMessage());
             responseData.setSuccess(false);
+        }
+        return responseData;
+    }
+
+    @ApiOperation(value = "退出登录")
+    @GetMapping(value = "/logout")
+    public ResponseData<String> logout(){
+        ResponseData<String> responseData = new ResponseData<>();
+        try{
+
+        }catch (Exception e){
+            log.error("<====LoginController logout{}",e.getMessage(), e);
         }
         return responseData;
     }
