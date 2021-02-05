@@ -31,7 +31,6 @@ class TestServiceImplTest {
                 throw new Exception("手动抛错");
             case "下标越界":
                 int[] array = new int[2];
-                System.out.println(array[3]);
                 break;
             default:
         }

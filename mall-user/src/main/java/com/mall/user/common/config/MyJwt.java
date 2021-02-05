@@ -1,4 +1,4 @@
-package com.mall.user.config;
+package com.mall.user.common.config;
 
 import lombok.Data;
 

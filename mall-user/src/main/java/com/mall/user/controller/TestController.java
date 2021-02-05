@@ -31,6 +31,22 @@ public class TestController {
      * ResponseData会警告 所以Response要在方法中new一个新的即使代码重复
      */
 
+    @ApiOperation(value = "测试访问权限")
+    @GetMapping(value = "/grant")
+    @PreAuthorize("hasAuthority('P2')")
+    public String testGrant() {
+        log.info("TestController testGrant");
+        ResponseData<String> responseData = new ResponseData<>();
+        try {
+            responseData.setData("此人拥有p2权限");
+        } catch (Exception e) {
+            log.error("TestController testGrant{}", e.getMessage(), e);
+            responseData.setMessage(e.getMessage());
+            responseData.setSuccess(false);
+        }
+        return "访问order资源";
+    }
+
     @ApiOperation(value = "测试")
     @GetMapping(value = "/test", produces = "application/json;charset=UTF-8")
     public ResponseData<String> test() {

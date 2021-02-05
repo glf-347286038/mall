@@ -1,4 +1,4 @@
-package com.mall.user.config;
+package com.mall.user.common.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +41,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login/**").anonymous()
+                .antMatchers("/oauth/**").anonymous()
                 .antMatchers("/register/**").anonymous()
                 // 除/login和/register外都要鉴权通过
                 // 放行swagger

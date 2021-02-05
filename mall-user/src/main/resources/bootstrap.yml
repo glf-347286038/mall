@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: mall-user
+  profiles:
+    active: dev
+server:
+  port: 8083
