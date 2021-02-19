@@ -1,4 +1,4 @@
-package com.mall.user.common.sys;
+package product.common.sys;
 
 import lombok.Data;
 

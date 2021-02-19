@@ -2,12 +2,16 @@ package com.mall.user.service.impl;
 
 import com.mall.user.client.OauthServiceClient;
 import com.mall.user.common.config.MyJwt;
+import com.mall.user.mapper.MallUserMapper;
+import com.mall.user.model.entity.MallUser;
 import com.mall.user.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 /**
  * @author: gaolingfeng
@@ -20,6 +24,9 @@ import org.springframework.stereotype.Service;
 public class LoginServiceImpl implements LoginService {
     @Autowired
     private OauthServiceClient oauthServiceClient;
+
+    @Autowired
+    private MallUserMapper mallUserMapper;
 
     @Value("${oauth2.client-id}")
     private String clientId;
@@ -35,7 +42,14 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public MyJwt getJwt(String userName, String password) {
         // 远程请求授权服务器获取token
-        return oauthServiceClient.getToken(userName, password, grantType, clientId, clientSecret);
+        MyJwt myJwt = oauthServiceClient.getToken(userName, password, grantType, clientId, clientSecret);
+        // 判断mall-user库中是否有该账号,没有则新建
+
+        MallUser mallUser = mallUserMapper.selectById(myJwt.getInfo().getUserId());
+        if(ObjectUtils.isEmpty(mallUser)){
+            
+        }
+        return myJwt;
     }
 
     @Override
