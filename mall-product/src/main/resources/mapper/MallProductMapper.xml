@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.product.mapper.MallProductMapper">
+
+    <select id="queryProduct" resultType="com.mall.product.model.dto.MallProductDTO">
+        SELECT
+	        MP.PRODUCT_ID,
+	        MP.PRODUCT_NAME,
+	        MP.PRODUCT_BRAND,
+	        MP.PRODUCT_DESCRIPTION,
+	        MP.PRODUCT_PRICE,
+	        MP.PRODUCT_WEIGHT,
+	        MP.PRODUCT_IMG_PATH,
+	        MP.RUSH_START_TIME,
+	        MP.RUSH_END_TIME,
+	        MP.PRODUCT_STOCK,
+	        PT.TYPE
+        FROM
+	        mall_product MP
+        INNER JOIN product_type PT ON PT.TYPE_ID = MP.PRODUCT_TYPE_ID
+        <where>
+            <if test="mallProductDTO.productName != null and mallProductDTO.productName != ''">
+                MP.PRODUCT_NAME LIKE CONCAT('%',#{mallProductDTO.productName},'%')
+            </if>
+            <if test="mallProductDTO.productBrand != null">
+                MP.PRODUCT_BRAND LIKE CONCAT('%',#{mallProductDTO.productBrand},'%')
+            </if>
+            <if test="mallProductDTO.lowestPrice != null">
+                MP.PRODUCT_PRICE >= #{mallProductDTO.lowestPrice}
+            </if>
+            <if test="mallProductDTO.highestPrice != null">
+                #{mallProductDTO.highestPrice} >= MP.PRODUCT_PRICE
+            </if>
+        </where>
+        ORDER BY MP.PRODUCT_NAME ASC
+    </select>
+</mapper>

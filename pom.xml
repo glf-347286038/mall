@@ -11,7 +11,8 @@
         <module>oauth2</module>
         <module>mall-order</module>
         <module>mall-user</module>
-        <module>product</module>
+        <module>mall-product</module>
+        <module>mall-product</module>
     </modules>
 
     <packaging>pom</packaging>

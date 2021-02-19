@@ -1,4 +1,4 @@
-package com.mall.user.model.entity;
+package com.mall.product.common.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -21,7 +21,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class SelfIncreasing implements Serializable {
 
-    private static final long serialVersionUID = 20210207165845L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * 表名
