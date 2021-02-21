@@ -20,16 +20,22 @@
         INNER JOIN product_type PT ON PT.TYPE_ID = MP.PRODUCT_TYPE_ID
         <where>
             <if test="mallProductDTO.productName != null and mallProductDTO.productName != ''">
-                MP.PRODUCT_NAME LIKE CONCAT('%',#{mallProductDTO.productName},'%')
+                AND MP.PRODUCT_NAME LIKE CONCAT('%',#{mallProductDTO.productName},'%')
             </if>
             <if test="mallProductDTO.productBrand != null">
-                MP.PRODUCT_BRAND LIKE CONCAT('%',#{mallProductDTO.productBrand},'%')
+                AND MP.PRODUCT_BRAND LIKE CONCAT('%',#{mallProductDTO.productBrand},'%')
             </if>
             <if test="mallProductDTO.lowestPrice != null">
-                MP.PRODUCT_PRICE >= #{mallProductDTO.lowestPrice}
+                AND MP.PRODUCT_PRICE >= #{mallProductDTO.lowestPrice}
             </if>
             <if test="mallProductDTO.highestPrice != null">
-                #{mallProductDTO.highestPrice} >= MP.PRODUCT_PRICE
+                AND #{mallProductDTO.highestPrice} >= MP.PRODUCT_PRICE
+            </if>
+            <if test="mallProductDTO.rushStartTime != null">
+                AND MP.RUSH_START_TIME >= #{mallProductDTO.rushStartTime}
+            </if>
+            <if test="mallProductDTO.rushEndTime != null">
+                AND #{mallProductDTO.rushEndTime} >= MP.RUSH_START_TIME
             </if>
         </where>
         ORDER BY MP.PRODUCT_NAME ASC
