@@ -9,9 +9,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="mall-user" />
         <module name="oauth2" />
-        <module name="mall-order" />
-        <module name="eureka-server" />
         <module name="mall-product" />
+        <module name="eureka-server" />
+        <module name="mall-order" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

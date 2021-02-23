@@ -1,6 +1,6 @@
 spring:
   application:
-    name: mall-product-glf
+    name: mall-product
 #  profiles:
 #    active: dev
 server:
