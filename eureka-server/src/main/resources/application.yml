@@ -1,0 +1,24 @@
+#spring:
+#  application:
+#    name:eureka-server
+server:
+  port: 8000
+eureka:
+  instance:
+    hostname: eureka-branch
+  client:
+    service-url:
+#      对外公开的地址，用以将注册中心客户端的信息注册到此处
+      # 集群
+      defaultZone: http://175.27.134.153:8000/eureka/,http://47.98.149.207:8000/eureka/
+#      是否获取注册中心服务端的信息，自己没必要获取自己
+    fetch-registry: false
+#    是否将信息保存到注册中心服务端，没必要保存自己信息
+    register-with-eureka: false
+  server:
+    #服务端开启自我保护模式。无论什么情况，服务端都会保持一定数量的服务。避免client与server的
+    #的网络问题，而出现大量的服务被清除
+    enable-self-preservation: true
+    #开启清除无效的定时任务，默认时间间隔1分钟
+    eviction-interval-timer-in-ms: 60000
+

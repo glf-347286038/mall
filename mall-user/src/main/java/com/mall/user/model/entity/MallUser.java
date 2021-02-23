@@ -2,6 +2,7 @@ package com.mall.user.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -22,12 +23,10 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class MallUser implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 222L;
 
-    /**
-     * 用户唯一ID
-     */
     @TableId("USER_ID")
+    @ApiModelProperty(value = "用户唯一ID")
     private Integer userId;
 
     /**
@@ -59,6 +58,9 @@ public class MallUser implements Serializable {
      */
     @TableField("AGE")
     private Integer age;
+
+    @TableField("SEX")
+    private String balance;
 
     /**
      * 创建日期

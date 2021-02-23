@@ -36,7 +36,7 @@ eureka:
     instance-id: ${spring.cloud.client.ip-address}:${server.port}:${spring.application.name}
   client:
     service-url:
-      defaultZone: http://47.98.149.207:8000/eureka/
+      defaultZone: http://47.98.149.207:8000/eureka/,http://175.27.134.153:8000/eureka/
 ribbon:
   # 值的是建立连接所用的时间，使用与网络状态正常的情况，两端连接所用的时间
   ReadTimeout: 5000
