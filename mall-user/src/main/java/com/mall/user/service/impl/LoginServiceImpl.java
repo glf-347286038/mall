@@ -50,7 +50,6 @@ public class LoginServiceImpl implements LoginService {
     public static final String REDIS_PREFIX = "mall-user:mall-user:userId";
 
 
-
     @Value("${oauth2.client-id}")
     private String clientId;
 
@@ -88,7 +87,7 @@ public class LoginServiceImpl implements LoginService {
                 // 存入mysql 创建账户，往账户表中继续存入信息
                 mallUser = this.insertMallUserAndAccount(myJwt);
             }
-            // 存入redis
+            // 存入redis,而jackson的反序列化需要无参构造函数
             redisUtils.hashPut(REDIS_PREFIX, String.valueOf(mallUser.getUserId()), mallUser);
         }
         return myJwt;

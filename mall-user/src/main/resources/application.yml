@@ -43,8 +43,8 @@ mybatis-plus:
 eureka:
   instance:
     prefer-ip-address: true
-    # 部署梭所在服务器的公网ip
     ip-address: 47.98.149.207
+#    instance-id: ${spring.cloud.client.ip-address}:${server.port}:${spring.application.name}
     instance-id: ${eureka.instance.ip-address}:${server.port}:${spring.application.name}
   client:
     service-url:

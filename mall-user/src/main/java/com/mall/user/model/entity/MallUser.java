@@ -3,8 +3,10 @@ package com.mall.user.model.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModelProperty;
+import jdk.nashorn.internal.objects.annotations.Constructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -20,6 +22,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
 @Accessors(chain = true)
 public class MallUser implements Serializable {
 
