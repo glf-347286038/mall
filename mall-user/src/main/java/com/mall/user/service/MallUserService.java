@@ -1,6 +1,7 @@
 package com.mall.user.service;
 
 
+import com.mall.user.common.config.MyJwt;
 import com.mall.user.model.entity.MallUser;
 
 import java.util.List;

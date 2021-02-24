@@ -130,7 +130,7 @@ public class MyBatisPlusGenerator {
         // 如果 setInclude() 不加参数, 会自定查找所有表
         // 如需要制定单个表, 需填写参数如: strategyConfig.setInclude("user_info);
         // 指定表生成xml文件 =====================>
-        strategyConfig.setInclude();
+        strategyConfig.setInclude("user_account");
 
         // strategyConfig.setSuperEntityColumns("id");
         strategyConfig.setControllerMappingHyphenStyle(true);

@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class MallUser implements Serializable {
 
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 20210224210314L;
 
     @TableId("USER_ID")
     @ApiModelProperty(value = "用户唯一ID")
@@ -32,65 +32,64 @@ public class MallUser implements Serializable {
     /**
      * 用户登录名
      */
-    @TableField("USER_NAME")
+    @ApiModelProperty("")
     private String userName;
 
     /**
      * 用户真实姓名
      */
-    @TableField("REAL_NAME")
+    @ApiModelProperty("")
     private String realName;
 
     /**
      * 手机号
      */
-    @TableField("PHONE")
+    @ApiModelProperty("")
     private String phone;
 
     /**
      * 性别
      */
-    @TableField("SEX")
+    @ApiModelProperty("")
     private String sex;
 
     /**
      * 年龄
      */
-    @TableField("AGE")
+    @ApiModelProperty("")
     private Integer age;
 
-    @TableField("SEX")
-    private String balance;
+    @ApiModelProperty("")
+    private Integer accountId;
 
     /**
      * 创建日期
      */
-    @TableField("CREATION_DATE")
+    @ApiModelProperty("")
     private LocalDateTime creationDate;
 
     /**
      * 创建人id
      */
-    @TableField("CREATED_BY")
+    @ApiModelProperty("")
     private Integer createdBy;
 
     /**
      * 最近更新日期
      */
-    @TableField("LAST_UPDATE_DATE")
+    @ApiModelProperty("")
     private LocalDateTime lastUpdateDate;
 
     /**
      * 最近更新人id
      */
-    @TableField("LAST_UPDATE_BY")
+    @ApiModelProperty("")
     private Integer lastUpdateBy;
 
     /**
      * 更新版本号
      */
-    @TableField("VERSION_NUMBER")
+    @ApiModelProperty("")
     private Integer versionNumber;
-
 
 }

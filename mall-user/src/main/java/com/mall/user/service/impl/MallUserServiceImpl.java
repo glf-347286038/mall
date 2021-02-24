@@ -1,5 +1,7 @@
 package com.mall.user.service.impl;
 
+import com.mall.user.common.config.MyJwt;
+import com.mall.user.common.sys.SelfIncreasingUtil;
 import com.mall.user.mapper.MallUserMapper;
 import com.mall.user.model.entity.MallUser;
 import com.mall.user.service.MallUserService;
