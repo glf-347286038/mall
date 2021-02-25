@@ -46,8 +46,8 @@ eureka:
   instance:
     prefer-ip-address: true
     ip-address: 47.98.149.207
-#    instance-id: ${spring.cloud.client.ip-address}:${server.port}:${spring.application.name}
-    instance-id: ${eureka.instance.ip-address}:${server.port}:${spring.application.name}
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}:${spring.application.name}
+#    instance-id: ${eureka.instance.ip-address}:${server.port}:${spring.application.name}
   client:
     service-url:
       defaultZone: http://175.27.134.153:8000/eureka/,http://47.98.149.207:8000/eureka/
