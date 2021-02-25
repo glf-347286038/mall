@@ -1,10 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mall.user.mapper.MallUserMapper">
-    <select id="getMallUser" resultType="com.mall.user.model.entity.MallUser">
-        SELECT USER_ID FROM
-        mall_user
+    <select id="getUserSelfInfo" resultType="com.mall.user.model.dto.MallUserDTO">
+        SELECT
+	        MU.USER_ID,
+	        MU.USER_NAME,
+	        MU.REAL_NAME,
+	        MU.PHONE,
+	        MU.AGE,
+	        MU.SEX,
+	        UA.BALANCE AS accountBalance
+        FROM
+	        mall_user MU
+        LEFT JOIN user_account UA ON UA.ACCOUNT_ID = MU.ACCOUNT_ID
         WHERE
-
+	        MU.USER_ID = #{mallUserDTO.userId}
     </select>
+
+	<select id="queryUserInfo" resultType="com.mall.user.model.dto.MallUserDTO">
+		SELECT
+	        MU.USER_ID,
+	        MU.USER_NAME,
+	        MU.REAL_NAME,
+	        MU.PHONE,
+	        MU.AGE,
+	        MU.SEX,
+	        UA.BALANCE AS accountBalance
+        FROM
+	        mall_user MU
+        LEFT JOIN user_account UA ON UA.ACCOUNT_ID = MU.ACCOUNT_ID
+        <where>
+			<if test="mallUserDTO.userId != null and mallUserDTO.userId != ''">
+				AND MU.USER_ID LIKE CONCAT('%',#{mallUserDTO.userId},'%')
+			</if>
+			<if test="mallUserDTO.userName != null and mallUserDTO.userName != ''">
+				AND MU.USER_NAME LIKE CONCAT('%',#{mallUserDTO.userId},'%')
+			</if>
+			<if test="mallUserDTO.realName != null and mallUserDTO.realName != ''">
+				AND MU.USER_REAL_NAME LIKE CONCAT('%',#{mallUserDTO.realName},'%')
+			</if>
+			<if test="mallUserDTO.phone != null and mallUserDTO.phone != ''">
+				AND MU.PHONE LIKE CONCAT('%',#{mallUserDTO.phone},'%')
+			</if>
+		</where>
+	</select>
 </mapper>

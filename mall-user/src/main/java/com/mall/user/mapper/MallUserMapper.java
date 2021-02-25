@@ -1,9 +1,12 @@
 package com.mall.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.mall.user.model.dto.MallUserDTO;
 import com.mall.user.model.entity.MallUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,11 +19,21 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface MallUserMapper extends BaseMapper<MallUser> {
     /**
-     * description:
+     * 只能查询用户自己信息
      * @author: gaolingfeng
      * @date: 2021/2/7 21:22
-     * @param mallUser id、name等查询
+     * @param mallUserDTO id、name等查询
      * @return MallUser
      */
-    MallUser getMallUser(@Param("userDto") MallUser mallUser);
+    MallUserDTO getUserSelfInfo(@Param("mallUserDTO") MallUserDTO mallUserDTO);
+
+    /**
+     * 查询用户信息
+     * @author: gaolingfeng
+     * @date: 2021/2/25 23:39
+     * @param mallUserDTO 筛选条件
+     * @return List<MallUserDTO>
+     */
+    List<MallUserDTO> queryUserInfo(@Param("mallUserDTO")MallUserDTO mallUserDTO);
+
 }

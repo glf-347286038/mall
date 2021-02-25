@@ -23,6 +23,8 @@ spring:
     port: 6379
     # 连接超时时间 ms 6秒
     timeout: 6000
+    # 存储到第二个仓库
+    database: 2
     lettuce:
       pool:
         # 线程安全 多个线程共享一个连接 nettyNIO

@@ -5,18 +5,18 @@ import com.mall.user.client.OauthServiceClient;
 import com.mall.user.common.config.MyJwt;
 import com.mall.user.common.sys.SelfIncreasingUtil;
 import com.mall.user.common.util.RedisUtils;
-import com.mall.user.config.PasswordEncode;
 import com.mall.user.mapper.MallUserMapper;
 import com.mall.user.mapper.UserAccountMapper;
+import com.mall.user.model.dto.MallUserDTO;
 import com.mall.user.model.entity.MallUser;
 import com.mall.user.model.entity.UserAccount;
 import com.mall.user.service.LoginService;
 import com.mall.user.service.MallUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +45,8 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private MallUserService mallUserService;
 
 
     public static final String REDIS_PREFIX = "mall-user:mall-user:userId";
@@ -65,7 +67,6 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public MyJwt getJwt(String userName, String password) {
-        System.out.println("==========");
         // 远程请求授权服务器获取token
         MyJwt myJwt = oauthServiceClient.getToken(userName, password, grantType, clientId, clientSecret);
         // 为空直接返回空对象
@@ -88,7 +89,7 @@ public class LoginServiceImpl implements LoginService {
                 mallUser = this.insertMallUserAndAccount(myJwt);
             }
             // 存入redis,而jackson的反序列化需要无参构造函数
-            redisUtils.hashPut(REDIS_PREFIX, String.valueOf(mallUser.getUserId()), mallUser);
+            this.insertMallUserToRedis(mallUser);
         }
         return myJwt;
     }
@@ -129,11 +130,20 @@ public class LoginServiceImpl implements LoginService {
         mallUserMapper.insert(mallUser);
         UserAccount userAccount = new UserAccount();
         userAccount.setAccountId(accountId);
-        // 密码加密存储默认为666666+ss 这样子就算别人解密了，也不知道是666666
-        userAccount.setAccountPassword(passwordEncoder.encode("password:"+"666666"));
+        // 密码加密存储默认为password:+666666 这样子就算别人解密了，也不知道是666666
+        userAccount.setAccountPassword(passwordEncoder.encode("password:" + "666666"));
         // k1是明文密码，k2为加密过的密码，返回true或false
-        // passwordEncoder.matches(k1,k2);
+        // 返回 boolean passwordEncoder.matches(k1,k2);
         userAccountMapper.insert(userAccount);
         return mallUser;
+    }
+
+    /**
+     * 将用户信息存储到redis中
+     */
+    public void insertMallUserToRedis(MallUser mallUser) {
+        MallUserDTO mallUserDTO = new MallUserDTO();
+        BeanUtils.copyProperties(mallUser, mallUserDTO);
+        mallUserService.insertUserInfoToRedis(mallUserDTO);
     }
 }
