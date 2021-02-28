@@ -1,31 +1,31 @@
 spring:
   application:
-    name: mall-user-dev
+    name: mall-user
   datasource:
-    #连的使授权服务的数据库，其实真实环境，二者必然是分开的，注册、管理用户信息必定是oauth2那边做的
     url: jdbc:mysql://47.98.149.207:3306/mall-user?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     username: root
     password: 158d3e483dc2
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 60
-      # 连接超时时间默认是 30000(30秒)
+        # 连接超时时间默认是 30000(30秒)
       connection-timeout: 60000
-      # 空闲连接存活最大时间，默认 600000(10分钟)
+        # 空闲连接存活最大时间，默认 600000(10分钟)
       idle-timeout: 60000
-      # 连接将被测试活动的最大时间量
+        # 连接将被测试活动的最大时间量
       validation-timeout: 30000
-      # 此属性控制池中连接的最长生命周期，值0表示无限生命周期
+        # 此属性控制池中连接的最长生命周期，值0表示无限生命周期
       max-lifetime: 60000
-      # 连接到数据库时等待的最长时间(秒)
+        # 连接到数据库时等待的最长时间(秒)
       login-timeout: 5
-      # 池中维护的最小空闲连接数
+        # 池中维护的最小空闲连接数
       minimum-idle: 10
   redis:
     host: 175.27.134.153
     port: 6379
     # 连接超时时间 ms 6秒
     timeout: 6000
+    # 存储到第二个仓库
     database: 2
     lettuce:
       pool:
@@ -37,7 +37,7 @@ spring:
         # 连接池最大空闲连接
         max-idle: 8
     jackson:
-      # 日期全局配置
+        # 日期全局配置
       date-format: yyyy-MM-dd HH:mm:ss
       time-zone: GMT+8
 # 加载Mybatis映射文件,默认开启了下划线转驼峰设置
@@ -47,7 +47,8 @@ mybatis-plus:
 eureka:
   instance:
     prefer-ip-address: true
-    instance-id: ${spring.cloud.client.ip-address}:${server.port}:${spring.application.name}
+    ip-address: 175.27.134.153
+    instance-id: ${eureka.instance.ip-address}:${server.port}:${spring.application.name}
   client:
     service-url:
       defaultZone: http://175.27.134.153:8000/eureka/,http://47.98.149.207:8000/eureka/

@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: mall-user
   datasource:
     url: jdbc:mysql://47.98.149.207:3306/mall-user?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     username: root
@@ -46,13 +48,10 @@ eureka:
   instance:
     prefer-ip-address: true
     ip-address: 47.98.149.207
-    instance-id: ${spring.cloud.client.ip-address}:${server.port}:${spring.application.name}
-#    instance-id: ${eureka.instance.ip-address}:${server.port}:${spring.application.name}
+    instance-id: ${eureka.instance.ip-address}:${server.port}:${spring.application.name}
   client:
     service-url:
       defaultZone: http://175.27.134.153:8000/eureka/,http://47.98.149.207:8000/eureka/
-      #defaultZone: http://localhost:8000/eureka/
-
 ribbon:
   # 值的是建立连接所用的时间，使用与网络状态正常的情况，两端连接所用的时间
   ReadTimeout: 5000

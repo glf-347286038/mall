@@ -3,8 +3,11 @@ package com.mall.user.service.impl;
 import com.mall.user.common.sys.MallException;
 import com.mall.user.common.util.RedisUtils;
 import com.mall.user.mapper.MallUserMapper;
+import com.mall.user.mapper.UserAddressMapper;
 import com.mall.user.model.dto.MallUserDTO;
+import com.mall.user.model.dto.UserAddressDTO;
 import com.mall.user.model.entity.MallUser;
+import com.mall.user.model.entity.UserAddress;
 import com.mall.user.service.MallUserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -20,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * @author gaolingfeng
@@ -31,6 +33,9 @@ public class MallUserServiceImpl implements MallUserService {
 
     @Autowired
     private MallUserMapper mallUserMapper;
+
+    @Autowired
+    private UserAddressMapper userAddressMapper;
 
     public static final String REDIS_PREFIX = "mall-user:mall-user:userId";
     @Autowired
@@ -57,6 +62,8 @@ public class MallUserServiceImpl implements MallUserService {
             MallUserDTO mallUserDTO1 = new MallUserDTO();
             mallUserDTO1.setUserId(userId);
             mallUserDTO = mallUserMapper.getUserSelfInfo(mallUserDTO1);
+            // 根据用户ID查询用户地址
+            mallUserDTO.setDetailAddress(this.getUserAddress(userId));
             if(ObjectUtils.isEmpty(mallUserDTO)){
                 throw new MallException("程序出现错误,请与管理员联系");
             }
@@ -82,6 +89,9 @@ public class MallUserServiceImpl implements MallUserService {
         }else {
             // 查数据库
             mallUserDTOList = mallUserMapper.queryUserInfo(filterUserDTO);
+            for(MallUserDTO dto:mallUserDTOList){
+                dto.setDetailAddress(this.getUserAddress(dto.getUserId()));
+            }
             // 存redis
             this.putAllUserToRedis(mallUserDTOList);
             return mallUserDTOList;
@@ -99,7 +109,7 @@ public class MallUserServiceImpl implements MallUserService {
      * @date: 2021/2/25 22:42
      * @param mallUserDTO 筛选条件
      * @param dtoList 被筛选对象
-     * @return
+     * @return List<MallUserDTO>
      */
     private List<MallUserDTO> filterRedisUserInfo(MallUserDTO mallUserDTO, List<MallUserDTO> dtoList){
         List<MallUserDTO> mallUserDTOList = new ArrayList<>();
@@ -133,27 +143,39 @@ public class MallUserServiceImpl implements MallUserService {
                 }
             }
         }
-//        下面不能模糊查询
-//        if(StringUtils.isNotEmpty(String.valueOf(mallUserDTO.getUserId()))) {
-//            dtoList.removeIf(ele->!mallUserDTO.getUserId().equals(ele.getUserId()));
-//        }
-//        if(StringUtils.isNotEmpty(String.valueOf(mallUserDTO.getUserName()))){
-//            dtoList.removeIf(ele->!mallUserDTO.getUserName().equals(ele.getUserName()));
-//        }
-//        if(StringUtils.isNotEmpty(mallUserDTO.getRealName())){
-//            dtoList.removeIf(ele->!mallUserDTO.getRealName().equals(ele.getRealName()));
-//        }
-//        if(StringUtils.isNotEmpty(mallUserDTO.getPhone())){
-//            dtoList.removeIf(ele->!mallUserDTO.getPhone().equals(ele.getPhone()));
-//        }
         return mallUserDTOList;
     }
 
+    /**
+     * 将数据库中信息批量插入redis
+     * @author: gaolingfeng
+     * @date: 2021/2/26 0:20
+     * @param mallUserDTOS 数据库中信息
+     * @return void
+     */
     private void putAllUserToRedis(List<MallUserDTO> mallUserDTOS){
         Map<String,Object> redisMap = new HashMap<>(16);
         for(MallUserDTO dto:mallUserDTOS){
             redisMap.put(String.valueOf(dto.getUserId()),dto);
         }
         redisUtils.hashPutAll(REDIS_PREFIX,redisMap);
+    }
+
+    /**
+     * 查询用户地址信息
+     * @param userId 用户id
+     * @return UserAddressDTO
+     */
+    private String getUserAddress(Integer userId){
+        Map<String,Object> params = new HashMap<>(1);
+        params.put("USER_ID",userId);
+        List<UserAddress> userAddress = userAddressMapper.selectByMap(params);
+        if(CollectionUtils.isEmpty(userAddress)){
+            return null;
+        }else {
+            UserAddress dto = userAddress.get(0);
+            return dto.getAddressProvince()+dto.getAddressCity()+dto.getAddressDistrictorcounty()
+                    +dto.getAddressStreetortown()+dto.getAddressDetailed();
+        }
     }
 }

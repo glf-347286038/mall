@@ -61,4 +61,6 @@ public class MallUserDTO implements Serializable {
         this.realName = realName;
         this.phone = phone;
     }
+    @ApiModelProperty("收获地址")
+    private String detailAddress;
 }

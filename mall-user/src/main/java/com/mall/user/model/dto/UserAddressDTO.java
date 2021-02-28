@@ -1,4 +1,4 @@
-package com.mall.user.model.entity;
+package com.mall.user.model.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -15,15 +15,12 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class UserAddress implements Serializable {
+public class UserAddressDTO implements Serializable {
 
     private static final long serialVersionUID = 20210228173947L;
 
     @ApiModelProperty(value = "用户地址唯一ID")
     private Integer addressId;
-
-    @ApiModelProperty(value = "用户ID")
-    private Integer userId;
 
     @ApiModelProperty(value = "地址_省")
     private String addressProvince;
@@ -42,19 +39,4 @@ public class UserAddress implements Serializable {
 
     @ApiModelProperty(value = "是否为默认地址Y/N")
     private String defaultFlag;
-
-    @ApiModelProperty(value = "用户唯一ID")
-    private LocalDateTime creationDate;
-
-    @ApiModelProperty(value = "创建人id")
-    private Integer createdBy;
-
-    @ApiModelProperty(value = "最近更新日期")
-    private LocalDateTime lastUpdateDate;
-
-    @ApiModelProperty(value = "最近更新人id")
-    private Integer lastUpdateBy;
-
-    @ApiModelProperty(value = "更新版本号")
-    private Integer versionNumber;
 }

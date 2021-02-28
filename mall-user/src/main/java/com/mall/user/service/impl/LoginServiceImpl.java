@@ -29,7 +29,7 @@ import org.springframework.util.ObjectUtils;
  */
 @Service
 @Slf4j
-@PropertySource("classpath:application.yml")
+@PropertySource("classpath:application-al.yml")
 public class LoginServiceImpl implements LoginService {
     @Autowired
     private OauthServiceClient oauthServiceClient;
