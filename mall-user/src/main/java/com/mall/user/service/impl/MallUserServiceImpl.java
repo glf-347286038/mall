@@ -166,7 +166,8 @@ public class MallUserServiceImpl implements MallUserService {
      * @param userId 用户id
      * @return UserAddressDTO
      */
-    private String getUserAddress(Integer userId){
+    @Override
+    public String getUserAddress(Integer userId){
         Map<String,Object> params = new HashMap<>(1);
         params.put("USER_ID",userId);
         List<UserAddress> userAddress = userAddressMapper.selectByMap(params);

@@ -82,8 +82,11 @@ public class LoginServiceImpl implements LoginService {
         } else {
             // redis中若没有,去查mysql有没有，mysql中若也没有，则为首次登录系统，mall_user表中没存数据
             // 先往mysql中mall_user表插入数据,再跟新到redis中
-            QueryWrapper<MallUser> wrapper = new QueryWrapper<>();
-            MallUser mallUser = mallUserMapper.selectById(myJwt.getInfo().getUserId());
+            MallUserDTO mallUser = mallUserMapper.getUserSelfInfo(new MallUserDTO(){
+                {
+                    setUserId(myJwt.getInfo().getUserId());
+                }
+            });
             if (ObjectUtils.isEmpty(mallUser)) {
                 // 存入mysql 创建账户，往账户表中继续存入信息
                 mallUser = this.insertMallUserAndAccount(myJwt);
@@ -118,7 +121,7 @@ public class LoginServiceImpl implements LoginService {
      * @return void
      */
     @Transactional(rollbackFor = Exception.class)
-    public MallUser insertMallUserAndAccount(MyJwt myJwt) {
+    public MallUserDTO insertMallUserAndAccount(MyJwt myJwt) {
         MallUser mallUser = new MallUser();
         Integer accountId = selfIncreasingUtil.getNextKey("user_account","ACCOUNT_ID");
         mallUser.setUserId(myJwt.getInfo().getUserId());
@@ -135,15 +138,20 @@ public class LoginServiceImpl implements LoginService {
         // k1是明文密码，k2为加密过的密码，返回true或false
         // 返回 boolean passwordEncoder.matches(k1,k2);
         userAccountMapper.insert(userAccount);
-        return mallUser;
+        MallUserDTO mallUserDTO = new MallUserDTO();
+        BeanUtils.copyProperties(mallUser,mallUserDTO);
+        return mallUserDTO;
     }
 
     /**
      * 将用户信息存储到redis中
      */
-    public void insertMallUserToRedis(MallUser mallUser) {
+    public void insertMallUserToRedis(MallUserDTO mallUser) {
         MallUserDTO mallUserDTO = new MallUserDTO();
-        BeanUtils.copyProperties(mallUser, mallUserDTO);
+        // 查询地址
+        mallUserDTO.setDetailAddress(mallUserService.getUserAddress(mallUser.getUserId()));
+        // 查询余额
+
         mallUserService.insertUserInfoToRedis(mallUserDTO);
     }
 }

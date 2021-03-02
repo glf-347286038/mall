@@ -54,4 +54,13 @@ public interface MallUserService {
      * @param mallUserDTO 用户信息
      */
     void insertUserInfoToRedis(MallUserDTO mallUserDTO);
+
+    /**
+     * 查找用户地址
+     * @author: gaolingfeng
+     * @date: 2021/3/2 22:02
+     * @param userId 用户id
+     * @return String
+     */
+    String getUserAddress(Integer userId);
 }

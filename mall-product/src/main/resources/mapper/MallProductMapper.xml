@@ -39,5 +39,14 @@
             </if>
         </where>
         ORDER BY MP.PRODUCT_NAME ASC
+        <if test="pagination.flag != 'N'">
+            LIMIT #{pagination.start},#{pagination.size}
+        </if>
+    </select>
+
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM
+	        mall_product
     </select>
 </mapper>
