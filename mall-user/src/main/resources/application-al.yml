@@ -1,0 +1,66 @@
+spring:
+  application:
+    name: mall-user
+  datasource:
+    url: jdbc:mysql://47.98.149.207:3306/mall-user?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: 158d3e483dc2
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 60
+        # 连接超时时间默认是 30000(30秒)
+      connection-timeout: 60000
+        # 空闲连接存活最大时间，默认 600000(10分钟)
+      idle-timeout: 60000
+        # 连接将被测试活动的最大时间量
+      validation-timeout: 30000
+        # 此属性控制池中连接的最长生命周期，值0表示无限生命周期
+      max-lifetime: 60000
+        # 连接到数据库时等待的最长时间(秒)
+      login-timeout: 5
+        # 池中维护的最小空闲连接数
+      minimum-idle: 10
+  redis:
+    host: 175.27.134.153
+    port: 6379
+    # 连接超时时间 ms 6秒
+    timeout: 6000
+    # 存储到第二个仓库
+    database: 2
+    lettuce:
+      pool:
+        # 线程安全 多个线程共享一个连接 nettyNIO
+        # 最大连接数
+        max-active: 8
+        # 连接池最大阻塞等待时间(使用负值无限制)
+        max-wait: -1
+        # 连接池最大空闲连接
+        max-idle: 8
+    jackson:
+        # 日期全局配置
+      date-format: yyyy-MM-dd HH:mm:ss
+      time-zone: GMT+8
+# 加载Mybatis映射文件,默认开启了下划线转驼峰设置
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: 47.98.149.207
+    instance-id: ${eureka.instance.ip-address}:${server.port}:${spring.application.name}
+  client:
+    service-url:
+      defaultZone: http://175.27.134.153:8000/eureka/,http://47.98.149.207:8000/eureka/
+ribbon:
+  # 值的是建立连接所用的时间，使用与网络状态正常的情况，两端连接所用的时间
+  ReadTimeout: 5000
+  # 指的是建立连接后从服务器读取到可用资源所用的时间
+  ConnectionTimeout: 5000
+#oauth2的配置
+oauth2:
+  client-id: c1
+  client-secret: secret
+  grant-type: password
+  uri: /oauth/token
+# 设置 feign 客户端超时时间（OpenFeign 默认支持 ribbon）

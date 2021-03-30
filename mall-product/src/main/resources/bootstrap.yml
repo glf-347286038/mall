@@ -1,7 +1,3 @@
 spring:
-  application:
-    name: mall-product
-#  profiles:
-#    active: dev
-server:
-  port: 8084
+  profiles:
+    active: dev

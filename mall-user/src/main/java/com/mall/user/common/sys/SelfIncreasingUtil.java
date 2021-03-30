@@ -17,7 +17,7 @@ import java.util.Map;
  * 获得自增列数字
  */
 @Component
-public class SelfIncreasing {
+public class SelfIncreasingUtil {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 

@@ -1,6 +1,7 @@
 package com.mall.user.common.sys;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author: gaolingfeng
@@ -10,6 +11,7 @@ import lombok.Data;
  * 运行时异常就继承RuntimeException,调用时可以不处理
  */
 @Data
+@EqualsAndHashCode
 public class MallException extends RuntimeException{
     private String code;
 

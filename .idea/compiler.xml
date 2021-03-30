@@ -9,8 +9,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="mall-user" />
         <module name="oauth2" />
-        <module name="mall-order" />
         <module name="mall-product" />
+        <module name="eureka-server" />
+        <module name="mall-order" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -19,6 +20,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="eureka-server" options="-parameters" />
       <module name="mall-order" options="-parameters" />
       <module name="mall-product" options="-parameters" />
       <module name="mall-user" options="-parameters" />
