@@ -5,6 +5,7 @@ import com.mall.user.model.dto.MallUserDTO;
 import com.mall.user.model.entity.MallUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
  * @author gaolingfeng
  * @since 2021-02-05
  */
-@Mapper
+@Repository
 public interface MallUserMapper extends BaseMapper<MallUser> {
     /**
      * 只能查询用户自己信息
